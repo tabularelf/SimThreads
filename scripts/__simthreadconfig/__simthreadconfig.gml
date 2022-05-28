@@ -1,0 +1,1 @@
+#macro SIMTHREAD_VERBOSE false
