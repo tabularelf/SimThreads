@@ -53,7 +53,7 @@ thread.push({
 Giving you the ultimate flexibility in however you want to handle your games logic!
 
 
-Example:
+# Example:
 ```gml
 // Create Event
 thread = new SimThread();
