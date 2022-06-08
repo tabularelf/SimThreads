@@ -1,5 +1,5 @@
 # SimThreads v1.0.0
-Parallel Execution in GameMaker
+Parallel Execution for GameMaker 2022.5+
 
 Allows multiple execution of functions/methods or block of codes with a handy dandy time_source implementation and custom function to execute functions.
 SimThreads has two major kinds of support: Direct calling a method and passing in a function/method with arguments.
