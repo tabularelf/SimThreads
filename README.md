@@ -1,7 +1,7 @@
 # SimThreads v1.0.0
 Parallel Execution for GameMaker 2022.5+
 
-Allows multiple execution of functions/methods or block of codes with a handy dandy time_source implementation and custom function to execute functions.
+Allows multiple execution of functions/methods or block of codes, with arguments provided optionally! This is done by having a handy dandy time_source implementation and custom function to execute functions with arguments (as `script_execute_ext` only works for GML functions and methods, not runtime functions.)
 SimThreads has two major kinds of support: Direct calling a method and passing in a function/method with arguments.
 
 The use cases for SimThreads allows one to basically push any sort of function/functions and process each set of functions over the next couple of frames.
@@ -17,7 +17,7 @@ Ues case:
 
 `thread = new SimThread([MaxExecutions]);`
 
-By default, SimThreads has a MaxExecution of `infinity` and will process every function/method in its queue until it hits the max thread time (as set by `.SetMaxTime(percent)`).
+By default, SimThreads has a MaxExecution of `infinity` and will process every function/method in its queue until it hits the max thread time (as set by `.SetMaxTime(percent)`, which is default to `100%`, or `1`).
 
 SimThreads can have a function, method or struct passed as a valid argument for both `.Push()` and `.Insert()` (see down below more for the arguments on those functions)
 
