@@ -4,8 +4,8 @@ Parallel Execution for GameMaker 2022.5+
 ### Quick Disclaimer!
 This is not "true multithreading". This is merely allowing code to be broken down and spread across several of frames, as oppose to having a massive for loop and manipulating lots of data all within a step.
 
-If you need any assistance, I'd recommend that you join [My Discord Server, TabularElf's Treehouse](https://discord.gg/ThW5exp6r4)
-Or if you're in [GameMaker Kitchen](https://discord.gg/8krYCqr), check out your_libraries🧶 for the thread discussion!
+If you need any assistance, I'd recommend that you join [My Discord Server, TabularElf's Treehouse](https://discord.gg/ThW5exp6r4) under `💻│gamemaker-libraries`.<br>
+Or if you're in [GameMaker Kitchen](https://discord.gg/8krYCqr), check out `your_libraries🧶` for the thread discussion!
 
 Allows multiple execution of functions/methods or block of codes, with arguments provided optionally! This is done by having a handy dandy time_source implementation and custom function to execute functions with arguments (as `script_execute_ext` only works for GML functions and methods, not runtime functions.)
 SimThreads has two major kinds of support: Direct calling a method and passing in a function/method with arguments.
