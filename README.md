@@ -107,7 +107,7 @@ Sets the max time a given SimThread can execute (with `percent` being a value be
 
 Sets the max amount of executions per step. `infinity` is set by default. Any number above `0` will limit the SimThread to that number of function executions.
 
-## `.Insert(entry, position)`
+## `.Insert(position, entry)`
 
 Inserts a function/method or struct to a set position within the SimThread.
 
