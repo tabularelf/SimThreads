@@ -18,7 +18,7 @@ function SimThread(_maxExecution = infinity) constructor {
 				ds_list_delete(__threadQueue, 0);
 				
 				if ((get_timer()/1000) > _totalTime) {
-					if (SIMTHREAD_VERBOSE) __simthreadtrace("Total time reached! Remaining queued: " + string(GetQueueLength()));
+					if (SIMTHREAD_VERBOSE) __SimThreadTrace("Total time reached! Remaining queued: " + string(GetQueueLength()));
 					break;
 				}
 			}	
@@ -31,7 +31,7 @@ function SimThread(_maxExecution = infinity) constructor {
 				ds_list_delete(__threadQueue, 0);
 				
 				if ((get_timer()/1000) > _totalTime) {
-					if (SIMTHREAD_VERBOSE) __simthreadtrace("Total time reached! Remaining queued: " + string(GetQueueLength()));
+					if (SIMTHREAD_VERBOSE) __SimThreadTrace("Total time reached! Remaining queued: " + string(GetQueueLength()));
 					break;
 				}
 			}		
@@ -40,7 +40,7 @@ function SimThread(_maxExecution = infinity) constructor {
 	time_source_start(__currentTimer);
 	
 	static Pause = function() {
-		if (SIMTHREAD_VERBOSE) __simthreadtrace("Paused!");
+		if (SIMTHREAD_VERBOSE) __SimThreadTrace("Paused!");
 		if (time_source_exists(__currentTimer)) {
 			time_source_stop(__currentTimer);	
 		}
@@ -48,7 +48,7 @@ function SimThread(_maxExecution = infinity) constructor {
 	}
 	
 	static Resume = function() {
-		if (SIMTHREAD_VERBOSE) __simthreadtrace("Resumed!");
+		if (SIMTHREAD_VERBOSE) __SimThreadTrace("Resumed!");
 		if (time_source_exists(__currentTimer)) {
 			time_source_start(__currentTimer);
 		}
@@ -65,19 +65,13 @@ function SimThread(_maxExecution = infinity) constructor {
 		return self;
 	}
 	
-	static Insert = function(_entry, _pos) {
-		var _newEntry = _entry;
-		if ((!is_struct(_newEntry)) || is_method(_newEntry))  {
-			_newEntry = {
-				callback: _entry,
-				args: []
-			}	
-		}
+	static Insert = function(_pos, _entry) {
+		var _newEntry = __SimSanitize(_entry);
 		
-		if (_pos == -1) {
+		if (_pos < 0) {
 			ds_list_add(__threadQueue, _newEntry);	
 		} else {
-			ds_list_insert(__threadQueue, max(_pos, 0), _newEntry);	
+			ds_list_insert(__threadQueue, min(max(_pos, 0), ds_list_size(__threadQueue)-1), _newEntry);	
 		}
 		return self;		
 	}
@@ -90,24 +84,10 @@ function SimThread(_maxExecution = infinity) constructor {
 			if (is_array(_entry)) {
 				var _j = 0;
 				repeat(array_length(_entry)) {
-					var _newEntry = _entry[_j++];
-					if ((!is_struct(_newEntry)) || is_method(_newEntry)) {
-						_newEntry = {
-							callback: _entry,
-							args: []
-						}
-					}
-					ds_list_add(__threadQueue, _newEntry);	
+					ds_list_add(__threadQueue, __SimSanitize(_entry[_j++]));	
 				}
 			} else {
-				var _newEntry = _entry;
-				if ((!is_struct(_newEntry)) || is_method(_newEntry)) {
-					_newEntry = {
-						callback: _entry,
-						args: []
-					}
-				}
-				ds_list_add(__threadQueue, _newEntry);		
+				ds_list_add(__threadQueue, __SimSanitize(_entry));		
 			}
 			++_i;
 		}

@@ -1,4 +1,4 @@
-# SimThreads v1.0.0
+# SimThreads v1.1.0
 Parallel Execution in GameMaker
 
 Example:

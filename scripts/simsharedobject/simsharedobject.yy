@@ -6,7 +6,7 @@
     "path": "folders/SimThread.yy",
   },
   "resourceVersion": "1.0",
-  "name": "function_execute",
+  "name": "SimSharedObject",
   "tags": [],
   "resourceType": "GMScript",
 }

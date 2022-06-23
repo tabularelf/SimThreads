@@ -2,8 +2,8 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "System",
-    "path": "folders/SimThread/System.yy",
+    "name": "SimThread",
+    "path": "folders/SimThread.yy",
   },
   "resourceVersion": "1.0",
   "name": "SimThread",

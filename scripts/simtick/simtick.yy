@@ -6,7 +6,7 @@
     "path": "folders/SimThread.yy",
   },
   "resourceVersion": "1.0",
-  "name": "function_execute",
+  "name": "SimTick",
   "tags": [],
   "resourceType": "GMScript",
 }
