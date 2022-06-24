@@ -21,12 +21,19 @@ tick.Insert(tick.GetMaxTicks(), function() {show_debug_message("And we reset!");
 thread = new SimThread();
 
 thread.Push(function() {
-	show_debug_message("Hello World!");	
+		show_debug_message("Begin!");
+});
+
+thread.Push(function() {
+	show_debug_message("One!");	
 	
-	thread.Insert(1, function() {
-		show_debug_message("Goodbye world!");
+	thread.PushNext(function() {
+		show_debug_message("Two!");
 	});
 });
+
+thread.Flush();
+
 /*
 // Creates and pushes shared object
 var _inst = new SimSharedObject(self, function() {

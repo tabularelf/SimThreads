@@ -49,7 +49,7 @@ function SimTick(_ticks = game_get_speed(gamespeed_fps)) constructor {
 			array_push(__ticksQueue[__lastPlacedTick], _newEntry);	
 			__lastPlacedTick = (__lastPlacedTick + 1) % __maxTicks;
 		} else {
-			array_push(__ticksQueue[min(max(_pos, 0), __maxTicks-1)], _newEntry);	
+			array_push(__ticksQueue[clamp(_pos, 0, __maxTicks-1)], _newEntry);	
 		}
 		return self;		
 	}

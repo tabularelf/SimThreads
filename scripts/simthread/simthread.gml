@@ -8,6 +8,7 @@ function SimThread(_maxExecution = infinity) constructor {
 	__maxTimePercentage = 1;
 	__maxExecution = _maxExecution;
 	__threadQueue = ds_list_create();
+	__threadHead = 0;
 	
 	__currentTimer = time_source_create(time_source_game, 1, time_source_units_frames, function() { 
 		var _totalTime = (get_timer()/1000) + (1000/game_get_speed(gamespeed_fps)) * __maxTimePercentage;
@@ -88,6 +89,13 @@ function SimThread(_maxExecution = infinity) constructor {
 		return self;
 	}
 	
+	static PushNext = function() {
+		var _i = argument_count;
+		repeat(argument_count) {
+			Insert(1, argument[0]);	
+		}
+	}
+	
 	static Clear = function() {
 		ds_list_clear(__threadQueue);
 		return self;
@@ -104,11 +112,10 @@ function SimThread(_maxExecution = infinity) constructor {
 	}
 	
 	static Flush = function() {
-		var _i = 0;
-		repeat(ds_list_size(__threadQueue)) {
-			var _exec = __threadQueue[| _i++];
+		while(ds_list_size(__threadQueue) > 0) {
+			var _exec = __threadQueue[| 0];
 			function_execute(_exec.callback, _exec.args);
+			ds_list_delete(__threadQueue, 0);
 		}
-		ds_list_clear(__threadQueue);
 	}
 }
