@@ -6,6 +6,7 @@
     {"id":{"name":"__SimSanitize","path":"scripts/__SimSanitize/__SimSanitize.yy",},"order":4,},
     {"id":{"name":"__SimThreadInit","path":"scripts/__SimThreadInit/__SimThreadInit.yy",},"order":5,},
     {"id":{"name":"SimThread","path":"scripts/SimThread/SimThread.yy",},"order":3,},
+    {"id":{"name":"SimCallback","path":"scripts/SimCallback/SimCallback.yy",},"order":6,},
     {"id":{"name":"__SimThreadConfig","path":"scripts/__SimThreadConfig/__SimThreadConfig.yy",},"order":0,},
     {"id":{"name":"__SimThreadTrace","path":"scripts/__SimThreadTrace/__SimThreadTrace.yy",},"order":0,},
     {"id":{"name":"SimTick","path":"scripts/SimTick/SimTick.yy",},"order":2,},

@@ -65,18 +65,12 @@ function SimThread(_maxExecution = infinity) constructor {
 		return self;
 	}
 	
-	static Insert = function(_pos, _entry) {
+	static Insert = function(_pos, _entry, _args) {
 		var _newEntry = __SimSanitize(_entry);
-		
-		if (_pos < 0) {
-			ds_list_add(__threadQueue, _newEntry);	
-		} else {
-			ds_list_insert(__threadQueue, min(max(_pos, 0), ds_list_size(__threadQueue)-1), _newEntry);	
-		}
+		ds_list_insert(__threadQueue, clamp(_pos, 0, ds_list_size(__threadQueue)), _newEntry);	
 		return self;		
 	}
-	
-	
+
 	static Push = function() {
 		var _i = 0;
 		repeat(argument_count) {

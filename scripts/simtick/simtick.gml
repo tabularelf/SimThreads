@@ -73,16 +73,6 @@ function SimTick(_ticks = game_get_speed(gamespeed_fps)) constructor {
 		return self;
 	}
 	
-	/*static PushRepeat = function(_numRepeats = 1, _entry) {
-		var _newEntry = __SimSanitize(_entry);
-		var _offset = __maxTicks div _numRepeats;
-		var _i = 0;
-		repeat(_numRepeats) {
-			Insert(_offset*++_i, _newEntry);	
-		}
-		return self;
-	}*/
-	
 	static Clear = function(_pos = undefined) {
 		if (is_undefined(_pos)) {
 			var _i = 0;

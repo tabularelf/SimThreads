@@ -1,7 +1,7 @@
 /// @description Insert description here
 // You can write your code in this editor
 show_debug_overlay(true);
-tick = new SimTick(20);
+/*tick = new SimTick(20);
 tick.Push(function() {
 	show_debug_message(1);
 });
@@ -15,11 +15,19 @@ tick.Insert(0, function() {
 });
 
 tick.Push(function() {show_debug_message("Hello!");});
-tick.Insert(tick.GetMaxTicks(), function() {show_debug_message("And we reset!");});
+tick.Insert(tick.GetMaxTicks(), function() {show_debug_message("And we reset!");});*/
 
 
-thread = new SimThread(1);
+thread = new SimThread();
 
+thread.Push(function() {
+	show_debug_message("Hello World!");	
+	
+	thread.Insert(1, function() {
+		show_debug_message("Goodbye world!");
+	});
+});
+/*
 // Creates and pushes shared object
 var _inst = new SimSharedObject(self, function() {
 	show_message_async(str);
@@ -48,10 +56,7 @@ buffer = buffer_create(1, buffer_grow, 1);
 var _len = array_length(entriesList);
 var _i = 0;
 repeat(_len) {
-  thread.Push({
-   callback: buffer_write,
-   args: [buffer, buffer_text, entriesList[_i++]]
-  });
+  thread.Push(SimCallback(buffer_write, [buffer, buffer_text, entriesList[_i++]]));
 }
 
 thread.Push(function() {
@@ -59,32 +64,3 @@ thread.Push(function() {
   show_debug_message("Buffer saved!");
   buffer_delete(buffer);
 });
-
-//thread.Flush();
-
-/*myMethod = function() {
-	var _i = 0;
-	var _str = [];
-	var _num = 0;
-	repeat(1000) {
-		_num = 1;	
-	}
-	repeat(argument_count) {
-		_str[_i] = argument[_i];	
-		++_i;
-	}
-	show_debug_message(_str);
-}
-
-myOtherMethod = function() {
-	return object_get_name(object_index);	
-}
-
-repeat(1000) {
-	thread.Push({callback: myMethod, args: [irandom(1024),irandom(1024),irandom(1024),irandom(1024),irandom(1024),irandom(1024),irandom(1024),irandom(1024), irandom(1024),irandom(1024),irandom(1024),irandom(1024),irandom(1024),irandom(1024),irandom(1024),irandom(1024), irandom(1024),irandom(1024),irandom(1024),irandom(1024),irandom(1024),irandom(1024),irandom(1024),irandom(1024)]});	
-}
-
-thread.Insert(myMethod, 0);
-thread.Push({callback: show_debug_message, args: [myOtherMethod()]});
-
-//show_message(thread.ToArray());

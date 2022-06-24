@@ -1,14 +1,10 @@
-function __SimSanitize(_entry) {
+function __SimSanitize(_entry, _args = []) {
 	var _newEntry = _entry;
 	if ((!is_struct(_newEntry)) || is_method(_newEntry)) {
-		_newEntry = {
-			callback: _entry,
-			args: [],
-			fixedStep: false
-		}
+		_newEntry = SimCallback(_entry, _args);
 	} else {
 		if (!variable_instance_exists(_newEntry, "args")) {
-			_newEntry.args = [];
+			_newEntry.args = _args;
 		}
 		
 		if (!variable_instance_exists(_newEntry, "fixedStep")) {
