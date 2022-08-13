@@ -9,34 +9,42 @@ function SimThread(_maxExecution = infinity) constructor {
 	__maxExecution = _maxExecution;
 	__threadQueue = ds_list_create();
 	__threadHead = 0;
+	__pushNextPointer = 1;
+	__inMainLoop = false;
 	
 	__currentTimer = time_source_create(time_source_game, 1, time_source_units_frames, function() { 
-		var _totalTime = (get_timer()/1000) + (1000/game_get_speed(gamespeed_fps)) * __maxTimePercentage;
+		var _totalTime = (get_timer() + game_get_speed(gamespeed_microseconds)) * __maxTimePercentage;
+		__pushNextPointer = 1;
+		__inMainLoop = true;
 		if (__maxExecution == infinity) {
 			repeat(ds_list_size(__threadQueue)) {
+				__pushNextPointer = 1;
 				var _exec = __threadQueue[| 0];
-				function_execute(_exec.callback, _exec.args);
+				__SimThreadFuncExec(_exec.callback, _exec.args);
 				ds_list_delete(__threadQueue, 0);
 				
-				if ((get_timer()/1000) > _totalTime) {
-					if (SIMTHREAD_VERBOSE) __SimThreadTrace("Total time reached! Remaining queued: " + string(GetQueueLength()));
+				if (get_timer() > _totalTime) {
+					if (SIMTHREAD_VERBOSE) __SimThreadTrace("Total time reached! Time taken: " + string(get_timer() - _totalTime) + "Remaining queued: " + string(GetQueueLength()));
 					break;
 				}
 			}	
 		} else if (__maxExecution > 0) {
 			repeat(__maxExecution) {
 				if (ds_list_size(__threadQueue) == 0) break;
-				
+				__pushNextPointer = 1;
 				var _exec = __threadQueue[| 0];
-				function_execute(_exec.callback, _exec.args);
+				__SimThreadFuncExec(_exec.callback, _exec.args);
 				ds_list_delete(__threadQueue, 0);
 				
-				if ((get_timer()/1000) > _totalTime) {
-					if (SIMTHREAD_VERBOSE) __SimThreadTrace("Total time reached! Remaining queued: " + string(GetQueueLength()));
+				if (get_timer() > _totalTime) {
+					if (SIMTHREAD_VERBOSE) __SimThreadTrace("Total time reached! Time taken: " + string(get_timer() - _totalTime) + "Remaining queued: " + string(GetQueueLength()));
 					break;
 				}
 			}		
 		}
+		// We reset this incase of sequential .PushNext calls
+		__pushNextPointer = 1;
+		__inMainLoop = false;
 	}, [], -1);
 	time_source_start(__currentTimer);
 	
@@ -66,7 +74,7 @@ function SimThread(_maxExecution = infinity) constructor {
 		return self;
 	}
 	
-	static Insert = function(_pos, _entry, _args) {
+	static Insert = function(_pos, _entry) {
 		var _newEntry = __SimSanitize(_entry);
 		ds_list_insert(__threadQueue, clamp(_pos, 0, ds_list_size(__threadQueue)), _newEntry);	
 		return self;		
@@ -90,10 +98,11 @@ function SimThread(_maxExecution = infinity) constructor {
 	}
 	
 	static PushNext = function() {
-		var _i = argument_count;
+		if (!__inMainLoop) show_error(".PushNext cannot be used outside of the main push loop!", true);
 		repeat(argument_count) {
-			Insert(1, argument[0]);	
+			Insert(__pushNextPointer++, argument[0]);	
 		}
+		return self;
 	}
 	
 	static Clear = function() {
@@ -112,10 +121,16 @@ function SimThread(_maxExecution = infinity) constructor {
 	}
 	
 	static Flush = function() {
+		__pushNextPointer = 1;
+		__inMainLoop = true;
 		while(ds_list_size(__threadQueue) > 0) {
+			__pushNextPointer = 1;
 			var _exec = __threadQueue[| 0];
-			function_execute(_exec.callback, _exec.args);
+			__SimThreadFuncExec(_exec.callback, _exec.args);
 			ds_list_delete(__threadQueue, 0);
 		}
 	}
+	// Reset
+	__pushNextPointer = 1;
+	__inMainLoop = false;
 }

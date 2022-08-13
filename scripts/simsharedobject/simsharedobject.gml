@@ -6,7 +6,7 @@ function SimSharedObject(_self = self, _callback = undefined) constructor {
 		__Callback = _callback;	
 	}
 	
-	static End = function() {
+	static __FINISH = function() {
 		if (!is_undefined(__Callback)) {
 			var _callback = __Callback;
 			with(__SimSelfRef) {
@@ -17,9 +17,11 @@ function SimSharedObject(_self = self, _callback = undefined) constructor {
 		__SimSelfRef = undefined;
 	}
 	
+	static End = function() {
+		return Bind(__FINISH);	
+	}
+	
 	static Bind = function(_func) {
 		return method(self, _func);	
 	}
-	
-	static Finish = End;
 }

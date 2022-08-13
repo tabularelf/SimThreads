@@ -17,8 +17,9 @@ tick.Insert(0, function() {
 tick.Push(function() {show_debug_message("Hello!");});
 tick.Insert(tick.GetMaxTicks(), function() {show_debug_message("And we reset!");});*/
 
-
+str = "Hello World!";
 thread = new SimThread();
+//thread.SetMaxTime(.001);
 
 thread.Push(function() {
 		show_debug_message("Begin!");
@@ -30,14 +31,22 @@ thread.Push(function() {
 	thread.PushNext(function() {
 		show_debug_message("Two!");
 	});
+	
+	thread.PushNext(function() {
+		show_debug_message("Three!");
+	});
+	
+	thread.PushNext(function() {
+		show_debug_message("4?!");
+	});
 });
 
-thread.Flush();
+//thread.Flush();
 
-/*
+
 // Creates and pushes shared object
 var _inst = new SimSharedObject(self, function() {
-	show_message_async(str);
+	//show_message_async(str);
 });
 
 thread.Push(_inst.Bind(function() {
@@ -52,11 +61,9 @@ thread.Push(_inst.Bind(function() {
 	SIM_SELF.str = str;
 }));
 
-thread.Push(_inst.Bind(function() {
-	End();
-}));
+thread.Push(_inst.End());
 
-entriesList = array_create(10000, "the pug is never the end ");
+entriesList = array_create(100000, "the pug is never the end ");
 thread2 = new SimThread();
 buffer = buffer_create(1, buffer_grow, 1);
 // Write a bunch of data to said buffer
@@ -67,7 +74,7 @@ repeat(_len) {
 }
 
 thread.Push(function() {
-  buffer_save(buffer, "mytext.txt");
+  //buffer_save(buffer, "mytext.txt");
   show_debug_message("Buffer saved!");
   buffer_delete(buffer);
 });

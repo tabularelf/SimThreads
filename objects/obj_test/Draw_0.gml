@@ -1,1 +1,1 @@
-draw_text(8,8, thread.GetQueueLength());
+draw_text(8,16, thread.GetQueueLength());

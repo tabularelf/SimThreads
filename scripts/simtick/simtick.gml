@@ -20,7 +20,7 @@ function SimTick(_ticks = game_get_speed(gamespeed_fps)) constructor {
 		var _currentTickQueue = __ticksQueue[__currentTick];
 		repeat(array_length(_currentTickQueue)) {
 			var _exec = _currentTickQueue[_i++];
-			function_execute(_exec.callback, _exec.args);
+			__SimThreadFuncExec(_exec.callback, _exec.args);
 		}
 		__currentTick = (__currentTick + 1) % __maxTicks;
 	}, [], -1);
