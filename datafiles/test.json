@@ -1,0 +1,45 @@
+{
+  "_id": "62f7eb39e5cbe6194dd27b4d",
+  "index": 0,
+  "guid": "4ab2c0e9-9e90-48a4-9200-db988abe8f89",
+  "isActive": true,
+  "balance": "$1,554.63",
+  "picture": "http://placehold.it/32x32",
+  "age": 29,
+  "eyeColor": "green",
+  "name": "Melva Patton",
+  "gender": "female",
+  "company": "THREDZ",
+  "email": "melvapatton@thredz.com",
+  "phone": "+1 (858) 546-2423",
+  "address": "852 Mill Street, Fowlerville, Guam, 5008",
+  "about": "Nulla fugiat sunt in laboris anim non et minim sit ex nulla magna consequat nulla. Deserunt ipsum culpa minim reprehenderit ipsum cupidatat fugiat occaecat. Eiusmod amet nulla labore esse elit consectetur in eu officia adipisicing. Est in exercitation qui sit officia dolore. Sint nisi et culpa non nostrud est eiusmod Lorem velit dolore nulla laboris. Deserunt eiusmod laborum pariatur amet Lorem sint sit dolor sunt consectetur.\r\n",
+  "registered": "2016-12-12T04:43:15 -11:00",
+  "latitude": -23.857366,
+  "longitude": -119.025231,
+  "tags": [
+    "officia",
+    "ut",
+    "ad",
+    "tempor",
+    "amet",
+    "dolor",
+    "exercitation"
+  ],
+  "friends": [
+    {
+      "id": 0,
+      "name": "Duffy Harmon"
+    },
+    {
+      "id": 1,
+      "name": "Russell Davis"
+    },
+    {
+      "id": 2,
+      "name": "Katie Ramirez"
+    }
+  ],
+  "greeting": "Hello, Melva Patton! You have 8 unread messages.",
+  "favoriteFruit": "apple"
+}

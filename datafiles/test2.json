@@ -1,0 +1,45 @@
+{
+  "_id": "62f7eb3f1ec0cd828731adcc",
+  "index": 0,
+  "guid": "1dde5f5b-9f95-44d3-9659-57cddb3f9490",
+  "isActive": false,
+  "balance": "$3,016.77",
+  "picture": "http://placehold.it/32x32",
+  "age": 37,
+  "eyeColor": "blue",
+  "name": "Silvia Park",
+  "gender": "female",
+  "company": "COMTEXT",
+  "email": "silviapark@comtext.com",
+  "phone": "+1 (830) 485-2613",
+  "address": "960 Creamer Street, Jeff, Louisiana, 4172",
+  "about": "Mollit non anim proident ullamco sit aliqua anim consequat magna tempor duis. Occaecat eu veniam sunt irure enim incididunt pariatur esse eiusmod. Minim culpa sunt consequat deserunt ea. Ipsum irure velit amet qui minim amet adipisicing anim dolore in excepteur minim et ullamco. Ut culpa elit ea non magna id sint officia reprehenderit Lorem non duis. Proident aliquip eiusmod fugiat nisi. Sit veniam ut proident consectetur tempor anim.\r\n",
+  "registered": "2015-06-15T12:04:41 -10:00",
+  "latitude": -4.565973,
+  "longitude": -24.670434,
+  "tags": [
+    "in",
+    "non",
+    "consectetur",
+    "labore",
+    "sunt",
+    "cillum",
+    "do"
+  ],
+  "friends": [
+    {
+      "id": 0,
+      "name": "Pope Becker"
+    },
+    {
+      "id": 1,
+      "name": "Katherine Travis"
+    },
+    {
+      "id": 2,
+      "name": "Whitfield Stephens"
+    }
+  ],
+  "greeting": "Hello, Silvia Park! You have 10 unread messages.",
+  "favoriteFruit": "banana"
+}
