@@ -12,13 +12,13 @@ function SimThread(_maxExecution = infinity) constructor {
 	__pushNextPointer = 1;
 	__inMainLoop = false;
 	
-	__currentTimer = time_source_create(time_source_game, 1, time_source_units_frames, function() { 
+	__currentTimer = time_source_create(time_source_global, 1, time_source_units_frames, function() { 
 		var _prevTime = get_timer();
 		var _totalTime = (_prevTime + (game_get_speed(gamespeed_microseconds) *  __maxTimePercentage));
 		__pushNextPointer = 1;
 		__inMainLoop = true;
 		if (__maxExecution == infinity) {
-			repeat(ds_list_size(__threadQueue)) {
+			while(ds_list_size(__threadQueue) > 0) {
 				__pushNextPointer = 1;
 				var _exec = __threadQueue[| 0];
 				__SimThreadFuncExec(_exec.callback, _exec.args);
@@ -134,8 +134,13 @@ function SimThread(_maxExecution = infinity) constructor {
 			__SimThreadFuncExec(_exec.callback, _exec.args);
 			ds_list_delete(__threadQueue, 0);
 		}
+		// Reset
+		__pushNextPointer = 1;
+		__inMainLoop = false;
 	}
-	// Reset
-	__pushNextPointer = 1;
-	__inMainLoop = false;
+	
+	static Loop = function(_size, _callback, _pos = 0) {
+		var _thread = self;
+		Push(method({size: _size, pos: _pos, thread: _thread, callback: _callback}, __SimIterator));
+	}
 }

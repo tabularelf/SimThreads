@@ -6,10 +6,6 @@ function __SimSanitize(_entry, _args = []) {
 		if (!variable_instance_exists(_newEntry, "args")) {
 			_newEntry.args = _args;
 		}
-		
-		if (!variable_instance_exists(_newEntry, "fixedStep")) {
-			_newEntry.fixedStep = false;
-		}
 	}
 	return _newEntry;
 }

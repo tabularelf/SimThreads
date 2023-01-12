@@ -63,15 +63,19 @@ thread.Push(_inst.Bind(function() {
 
 thread.Push(_inst.End());
 
-entriesList = array_create(100000, "the pug is never the end ");
+entriesList = array_create(10000, "the pug is never the end ");
 thread2 = new SimThread();
 buffer = buffer_create(1, buffer_grow, 1);
 // Write a bunch of data to said buffer
 var _len = array_length(entriesList);
 var _i = 0;
-repeat(_len) {
+/*repeat(_len) {
   thread.Push(SimCallback(buffer_write, [buffer, buffer_text, entriesList[_i++]]));
-}
+}*/
+
+thread.Loop(_len, function(_pos) {
+	buffer_write(buffer, buffer_text, entriesList[_pos]);
+});
 
 thread.Push(function() {
   //buffer_save(buffer, "mytext.txt");

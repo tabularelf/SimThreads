@@ -1,11 +1,11 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "SimTick",
+  "name": "__SimIterator",
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "SimThread",
-    "path": "folders/SimThread.yy",
+    "name": "SimThreads",
+    "path": "SimThreads.yyp",
   },
 }
