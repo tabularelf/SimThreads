@@ -41,28 +41,6 @@ thread.Push(function() {
 	});
 });
 
-//thread.Flush();
-
-
-// Creates and pushes shared object
-var _inst = new SimSharedObject(self, function() {
-	//show_message_async(str);
-});
-
-thread.Push(_inst.Bind(function() {
-	str = SIM_SELF.str;
-}));
-
-thread.Push(_inst.Bind(function() {
-	str = string_delete(str, 1, 6);
-}));
-
-thread.Push(_inst.Bind(function() {
-	SIM_SELF.str = str;
-}));
-
-thread.Push(_inst.End());
-
 entriesList = array_create(100000, "the pug is never the end ");
 buffer = buffer_create(1, buffer_grow, 1);
 // Write a bunch of data to said buffer

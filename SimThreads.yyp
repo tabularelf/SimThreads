@@ -5,7 +5,6 @@
   "resources": [
     {"id":{"name":"__SimThreadFuncExec","path":"scripts/__SimThreadFuncExec/__SimThreadFuncExec.yy",},"order":3,},
     {"id":{"name":"obj_test_save","path":"objects/obj_test_save/obj_test_save.yy",},"order":3,},
-    {"id":{"name":"SimSharedObject","path":"scripts/SimSharedObject/SimSharedObject.yy",},"order":5,},
     {"id":{"name":"__SimSanitize","path":"scripts/__SimSanitize/__SimSanitize.yy",},"order":1,},
     {"id":{"name":"__SimThreadInit","path":"scripts/__SimThreadInit/__SimThreadInit.yy",},"order":2,},
     {"id":{"name":"SimThread","path":"scripts/SimThread/SimThread.yy",},"order":3,},
