@@ -142,5 +142,6 @@ function SimThread(_maxExecution = infinity) constructor {
 	static Loop = function(_size, _callback, _final_callback, _pos = 0) {
 		var _thread = self;
 		Push(method({size: _size, pos: _pos, thread: _thread, callback: _callback, final_callback: __SimSanitize(_final_callback)}, __SimIterator));
+		return self;
 	}
 }
