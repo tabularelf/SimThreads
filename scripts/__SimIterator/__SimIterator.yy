@@ -5,7 +5,7 @@
   "isDnD": false,
   "isCompatibility": false,
   "parent": {
-    "name": "SimThreads",
-    "path": "SimThreads.yyp",
+    "name": "System",
+    "path": "folders/SimThread/System.yy",
   },
 }

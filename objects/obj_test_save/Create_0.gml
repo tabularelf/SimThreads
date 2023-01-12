@@ -63,7 +63,7 @@ thread.Push(_inst.Bind(function() {
 
 thread.Push(_inst.End());
 
-entriesList = array_create(10000, "the pug is never the end ");
+entriesList = array_create(100000, "the pug is never the end ");
 thread2 = new SimThread();
 buffer = buffer_create(1, buffer_grow, 1);
 // Write a bunch of data to said buffer
