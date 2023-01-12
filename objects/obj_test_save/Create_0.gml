@@ -47,8 +47,7 @@ buffer = buffer_create(1, buffer_grow, 1);
 var _len = array_length(entriesList);
 thread.Loop(_len, function(_pos) {
 	buffer_write(buffer, buffer_text, entriesList[_pos]);
-}, function() {
-  //buffer_save(buffer, "mytext.txt");
+}, SimCallback(function(_buffer) {
   show_debug_message("Buffer saved!");
-  buffer_delete(buffer);
-});
+  buffer_delete(_buffer);
+}, [buffer]));
