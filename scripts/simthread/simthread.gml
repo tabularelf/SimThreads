@@ -11,8 +11,19 @@ function SimThread(_maxExecution = infinity) constructor {
 	__threadHead = 0;
 	__pushNextPointer = 1;
 	__inMainLoop = false;
+	__currentStruct = undefined;
 	
-	__currentTimer = time_source_create(time_source_global, 1, time_source_units_frames, function() { 
+	__currentTimer = time_source_create(time_source_global, 1, time_source_units_frames, method(self, __update), [], -1);
+	time_source_start(__currentTimer);
+	
+	static ForceBreak = function(_forceCallback = false) {
+		if (__currentStruct == undefined) return;
+		
+		__currentStruct.forceBreak = true;
+		__currentStruct.forceCallback = _forceCallback;
+	}
+	
+	static __update = function() { 
 		var _prevTime = get_timer();
 		var _totalTime = (_prevTime + (game_get_speed(gamespeed_microseconds) *  __maxTimePercentage));
 		__pushNextPointer = 1;
@@ -50,8 +61,12 @@ function SimThread(_maxExecution = infinity) constructor {
 		// We reset this incase of sequential .PushNext calls
 		__pushNextPointer = 1;
 		__inMainLoop = false;
-	}, [], -1);
-	time_source_start(__currentTimer);
+		
+		// Turn off SimThread process when not in use
+		if (ds_list_size(__threadQueue) < 1) {
+			time_source_stop(__currentTimer);	
+		}
+	}
 	
 	static Pause = function() {
 		if (SIMTHREAD_VERBOSE) __SimThreadTrace("Paused!");
@@ -80,12 +95,14 @@ function SimThread(_maxExecution = infinity) constructor {
 	}
 	
 	static Insert = function(_pos, _entry) {
+		if (time_source_get_state(time_source_state_stopped)) time_source_start(__currentTimer);
 		var _newEntry = __SimSanitize(_entry);
 		ds_list_insert(__threadQueue, clamp(_pos, 0, ds_list_size(__threadQueue)), _newEntry);	
 		return self;		
 	}
 
 	static Push = function() {
+		if (time_source_get_state(time_source_state_stopped)) time_source_start(__currentTimer);
 		var _i = 0;
 		repeat(argument_count) {
 			var _entry = argument[_i];
@@ -103,12 +120,17 @@ function SimThread(_maxExecution = infinity) constructor {
 	}
 	
 	static PushNext = function() {
+		if (time_source_get_state(time_source_state_stopped)) time_source_start(__currentTimer);
 		if (!__inMainLoop) show_error(".PushNext cannot be used outside of the main push loop!", true);
 		repeat(argument_count) {
 			Insert(__pushNextPointer++, argument[0]);	
 		}
 		return self;
 	}
+		
+	static Async = Push;
+	
+	static AsyncNext = PushNext;
 	
 	static Clear = function() {
 		ds_list_clear(__threadQueue);
@@ -138,10 +160,27 @@ function SimThread(_maxExecution = infinity) constructor {
 		__pushNextPointer = 1;
 		__inMainLoop = false;
 	}
+		
+	static DoUntil = function(_do, _until, _final_callback = undefined) {
+		if (time_source_get_state(time_source_state_stopped)) time_source_start(__currentTimer);
+		var _thread = self;
+		var _struct = {forceBreak: false, forceCallback: false, thread: _thread, callbackDo: _do, callbackUntil: _until, final_callback: __SimSanitize(_final_callback)};
+		Push(method(_struct, __SimDoUntil));
+		return _struct;	
+	}
+	
+	static While = function(_while, _callback, _final_callback = undefined) {
+		if (time_source_get_state(time_source_state_stopped)) time_source_start(__currentTimer);
+		var _thread = self;
+		var _struct = {forceBreak: false, forceCallback: false, thread: _thread, callbackWhile: _while, callback: _callback, final_callback: __SimSanitize(_final_callback)};
+		Push(method(_struct, __SimWhile));
+		return _struct;	
+	}
 	
 	static Loop = function(_size, _callback, _final_callback, _pos = 0) {
+		if (time_source_get_state(time_source_state_stopped)) time_source_start(__currentTimer);
 		var _thread = self;
-		var _struct = {size: _size, pos: _pos, thread: _thread, callback: _callback, final_callback: __SimSanitize(_final_callback)};
+		var _struct = {forceBreak: false, forceCallback: false, size: _size, pos: _pos, thread: _thread, callback: _callback, final_callback: __SimSanitize(_final_callback)};
 		Push(method(_struct, __SimIterator));
 		return _struct;
 	}

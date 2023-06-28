@@ -8,6 +8,7 @@
     {"id":{"name":"__SimSanitize","path":"scripts/__SimSanitize/__SimSanitize.yy",},"order":1,},
     {"id":{"name":"__SimThreadInit","path":"scripts/__SimThreadInit/__SimThreadInit.yy",},"order":2,},
     {"id":{"name":"SimThread","path":"scripts/SimThread/SimThread.yy",},"order":3,},
+    {"id":{"name":"obj_test","path":"objects/obj_test/obj_test.yy",},"order":6,},
     {"id":{"name":"obj_test_file_find_async","path":"objects/obj_test_file_find_async/obj_test_file_find_async.yy",},"order":4,},
     {"id":{"name":"file_find_async","path":"scripts/file_find_async/file_find_async.yy",},"order":5,},
     {"id":{"name":"SimCallback","path":"scripts/SimCallback/SimCallback.yy",},"order":6,},
@@ -54,6 +55,6 @@
     {"resourceType":"GMIncludedFile","resourceVersion":"1.0","name":"data.csv","CopyToMask":-1,"filePath":"datafiles",},
   ],
   "MetaData": {
-    "IDEVersion": "2022.11.1.56",
+    "IDEVersion": "2022.0.1.31",
   },
 }
