@@ -1,5 +1,6 @@
 function file_find_async(_filepath, _mask, _attr, _callback_per_file, _final_callback) {
 	var _struct = new __file_find_class(_filepath, _mask, _attr, _callback_per_file, _final_callback);
+	return _struct.__response;
 }
 
 function __file_find_class(_filepath, _mask, _attr, _callback_per_file, _final_callback = undefined) constructor {
@@ -15,7 +16,7 @@ function __file_find_class(_filepath, _mask, _attr, _callback_per_file, _final_c
 	__mask = _mask;
 	__attr = _attr;
 	__callback_per_file = _callback_per_file;
-	__HandleFileCB = method(self, __HandleFile);
+	var _HandleFileCB = method(self, __HandleFile);
 	__finalCallback = _final_callback;
 	
 	// Fetch all file names, since these are synchronous anyway
@@ -31,10 +32,6 @@ function __file_find_class(_filepath, _mask, _attr, _callback_per_file, _final_c
 	__size = array_length(__files)-1;
 	
 	static __HandleFile = function() {
-		if (__pos > __size) {
-			if (!is_undefined(__finalCallback)) __finalCallback();
-			exit;
-		}
 		__file = __files[__pos];
 		if (__file != "") {
 			__callback_per_file(__filepath, __file);
@@ -42,12 +39,11 @@ function __file_find_class(_filepath, _mask, _attr, _callback_per_file, _final_c
 		
 		if (__file == "") {
 			if (!is_undefined(__finalCallback)) __finalCallback();
-			exit;
+			thread.Break();
 		}
 		
 		__pos++;
-		__thread.PushNext(__HandleFileCB);
 	}
 	
-	__thread.Push(__HandleFileCB);
+	__response = __thread.Loop(array_length(__files), _HandleFileCB);
 }

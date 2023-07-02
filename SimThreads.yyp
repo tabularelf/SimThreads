@@ -3,6 +3,7 @@
   "resourceVersion": "1.6",
   "name": "SimThreads",
   "resources": [
+    {"id":{"name":"__SimResponseClass","path":"scripts/__SimResponseClass/__SimResponseClass.yy",},"order":5,},
     {"id":{"name":"__SimThreadFuncExec","path":"scripts/__SimThreadFuncExec/__SimThreadFuncExec.yy",},"order":3,},
     {"id":{"name":"obj_test_save","path":"objects/obj_test_save/obj_test_save.yy",},"order":3,},
     {"id":{"name":"__SimSanitize","path":"scripts/__SimSanitize/__SimSanitize.yy",},"order":1,},
@@ -16,6 +17,7 @@
     {"id":{"name":"__SimThreadTrace","path":"scripts/__SimThreadTrace/__SimThreadTrace.yy",},"order":0,},
     {"id":{"name":"__SimIterator","path":"scripts/__SimIterator/__SimIterator.yy",},"order":4,},
     {"id":{"name":"SimTick","path":"scripts/SimTick/SimTick.yy",},"order":2,},
+    {"id":{"name":"__SimHandleResponse","path":"scripts/__SimHandleResponse/__SimHandleResponse.yy",},"order":6,},
     {"id":{"name":"rm_test","path":"rooms/rm_test/rm_test.yy",},"order":1,},
   ],
   "Options": [
