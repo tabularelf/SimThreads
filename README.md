@@ -1,4 +1,4 @@
-# SimThreads v2.0.0
+# SimThreads v2.0.0 Alpha
 Parallel Execution for GameMaker 2022.5+
 
 ### Quick Disclaimer!
