@@ -11,7 +11,6 @@ function __SimResponseClass(_thread) constructor {
 	whileCallback = undefined;
 	untilCallback = undefined;
 	
-	tryCallback = undefined;
 	catchCallback = undefined;
 	finallyCallback = undefined;
 	

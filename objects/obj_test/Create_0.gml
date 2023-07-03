@@ -1,33 +1,18 @@
-show_debug_overlay(true);
 thread = new SimThread();
 i = 0;
+//draw_enable_drawevent(false);
 
-var _response = thread.Loop(1000, function() {
+thread.Loop(1000, function() {
 	show_debug_message(i);
 	++i;
-}).Catch(function(_ex) {
-	show_debug_message(_ex.longMessage);	
+}).Finally(function() {
+	show_debug_message("Woot!");	
+	thread.Push(function() {
+		j += bar;	
+	}).Catch(function(_ex) {
+		show_debug_message(_ex.message);
+	}).Finally(function() {
+		show_debug_message("Woot x2!");
+		game_end();
+	});
 });
-
-//thread.While(function() {	
-//	return i < 11;
-//}, function() {
-//	show_debug_message("While");
-//	show_debug_message(i);
-//	i++;
-//	
-//	if (i == 5) || (i == 6) {
-//		thread.ForceBreak();	
-//	}
-//	
-//});
-//
-//
-//thread.DoUntil(function() {
-//	show_debug_message("DoUntil");
-//	show_debug_message(i);
-//	i++;
-//	
-//}, function() {	
-//	return i >= 10;
-//});

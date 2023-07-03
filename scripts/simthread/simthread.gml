@@ -8,7 +8,6 @@ function SimThread(_maxExecution = infinity) constructor {
 	__maxTimePercentage = 1;
 	__maxExecution = _maxExecution;
 	__threadQueue = ds_list_create();
-	__threadHead = 0;
 	__pushNextPointer = 1;
 	__inMainLoop = false;
 	__currentStruct = undefined;
@@ -62,11 +61,6 @@ function SimThread(_maxExecution = infinity) constructor {
 					--_pos;
 					--__size;
 				}
-				//if (ds_list_size(__threadQueue) == 0) break;
-				//__pushNextPointer = 1;
-				//var _exec = __threadQueue[| 0];
-				//__SimThreadFuncExec(_exec.callback, _exec.args);
-				//ds_list_delete(__threadQueue, 0);
 				
 				if (get_timer() > _totalTime) {
 					if (SIMTHREAD_VERBOSE) __SimThreadTrace("Total time reached! Time taken: " + string((get_timer() - _prevTime) / 1000) + " Remaining queued: " + string(GetQueueLength()));
@@ -146,6 +140,11 @@ function SimThread(_maxExecution = infinity) constructor {
 		return _response;
 	}
 		
+	static PushNext = function(_callback) {
+		if (!__inMainLoop) show_error(".PushNext cannot be used outside of the main push loop!", true);
+		return Insert(__pushNextPointer++, _callback);
+	}
+		
 	static Do = Push;
 	
 	static Clear = function() {
@@ -164,13 +163,21 @@ function SimThread(_maxExecution = infinity) constructor {
 	}
 	
 	static Flush = function() {
+		static _pos = 0;
 		__pushNextPointer = 1;
 		__inMainLoop = true;
-		while(ds_list_size(__threadQueue) > 0) {
-			__pushNextPointer = 1;
-			var _exec = __threadQueue[| 0];
-			__SimThreadFuncExec(_exec.callback, _exec.args);
-			ds_list_delete(__threadQueue, 0);
+		while(__size > 0) {
+				_pos = _pos % __size;
+				__pushNextPointer = 1;
+				var _exec = __threadQueue[| 0];
+				__currentStruct = _exec;
+				var _result = __SimHandleResponse(_exec);
+				__currentStruct = undefined;
+				if (_result) {
+					ds_list_delete(__threadQueue, 0);	
+					--__size;
+					--_pos;
+				}
 		}
 		// Reset
 		__pushNextPointer = 1;
