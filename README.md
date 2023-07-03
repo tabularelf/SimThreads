@@ -1,4 +1,4 @@
-# SimThreads v1.1.0
+# SimThreads v2.0.0
 Parallel Execution for GameMaker 2022.5+
 
 ### Quick Disclaimer!
@@ -107,13 +107,29 @@ Sets the max time a given SimThread can execute (with `percent` being a value be
 
 Sets the max amount of executions per step. `infinity` is set by default. Any number above `0` will limit the SimThread to that number of function executions.
 
-## `.Insert(entry, position)`
+## `.Loop(size, callback)
+
+Begins looping a callback until X size is reached. This hooks onto the `.While()` method of `__SimResponseClass`.
+
+Returns: Instance of `__SimResponseClass`.
+
+## `.Insert(position, callback)`
 
 Inserts a function/method or struct to a set position within the SimThread.
 
-## `.Push(entry, [entry], [...])`
+Returns: Instance of `__SimResponseClass`.
+
+## `.Push(callback)`
 
 Pushes one or multiple functions/methods or structs, adding at the end of the queue.
+
+Returns: Instance of `__SimResponseClass`.
+
+## `.PushNext(callback)`
+
+Pushes the next callback immediately behind this one.
+
+Returns: Instance of `__SimResponseClass`.
 
 ## `.Clear()`
 
@@ -130,3 +146,33 @@ Gets the length of the SimThread queue.
 ## `.Flush()`
 
 Flushes all functions (aka executes all functions/methods) within the queue, regardless of the settings of `.SetMaxTime()` and `.SetMaxExecutions()`, and regardless if it's paused or not.
+
+## `.Break()`
+
+Forces the Simthread to stop whatever code is being executed during the response (in the case of a loop).<br>
+Note: This only interrupts the loop, but not the current callback that's still processing. You will need to call `return;` or `exit;` to exit out of the callback.
+
+
+# `__SimResponseClass` methods.
+
+## `.While(callback)` 
+
+Used to indicate whether it should rerun the callback or not, before the callback is executed.
+
+Return: `self`
+
+## `.Until(callback)` 
+
+Used to indicate whether it should rerun the callback or not, after the callback is executed.
+
+Return: `self`
+
+## `.Catch(exception)
+
+Used to handle errors (if any).
+
+## `.Finally(callback)
+
+Used to fire off an additional callback after the main callback has finished either successfully, has errored out or has called `.Break()`.
+
+Return: `self`
