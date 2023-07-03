@@ -167,11 +167,11 @@ Used to indicate whether it should rerun the callback or not, after the callback
 
 Return: `self`
 
-## `.Catch(exception)
+## `.Catch(callback)`
 
 Used to handle errors (if any).
 
-## `.Finally(callback)
+## `.Finally(callback)`
 
 Used to fire off an additional callback after the main callback has finished either successfully, has errored out or has called `.Break()`.
 
