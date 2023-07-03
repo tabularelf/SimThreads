@@ -38,6 +38,7 @@ function __file_find_class(_filepath, _mask, _attr, _callback_per_file) construc
 		
 		if (__file == "") {
 			thread.Break();
+			exit;
 		}
 		
 		__pos++;

@@ -17,7 +17,7 @@ function SimThread(_maxExecution = infinity) constructor {
 	time_source_start(__currentTimer);
 	
 	static Break = function(_forceCallback = false) {
-		if (__currentStruct == undefined) return;
+		if (!__inMainLoop) show_error(".Break() cannot be used outside of the main SimThread loop!", true);
 		
 		__currentStruct.__forceBreak = true;
 	}
@@ -141,7 +141,7 @@ function SimThread(_maxExecution = infinity) constructor {
 	}
 		
 	static PushNext = function(_callback) {
-		if (!__inMainLoop) show_error(".PushNext cannot be used outside of the main push loop!", true);
+		if (!__inMainLoop) show_error(".PushNext cannot be used outside of the main SimThread loop!", true);
 		return Insert(__pushNextPointer++, _callback);
 	}
 		

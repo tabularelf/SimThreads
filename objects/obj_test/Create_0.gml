@@ -1,6 +1,6 @@
 thread = new SimThread();
 i = 0;
-//draw_enable_drawevent(false);
+draw_enable_drawevent(false);
 
 thread.Loop(1000, function() {
 	show_debug_message(i);
