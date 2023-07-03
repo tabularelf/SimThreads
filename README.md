@@ -50,10 +50,14 @@ thread.Push(function() {
 To push a function/method to a SimThread with arguments, you provide:
 
 ```gml
-thread.push({
-  callback: myGMLFunction
+thread.Push({
+  callback: myGMLFunction,
   args: ["Hello World!"]
 });
+
+// Or 
+
+thread.Push(SimCallback(myGMLFunction, ["Hello World!"]));
 ```
 
 Giving you the ultimate flexibility in however you want to handle your games logic!
@@ -68,15 +72,11 @@ entriesList = array_create(10000, "the pug is never the end ");
 buffer = buffer_create(1, buffer_grow, 1);
 // Write a bunch of data to said buffer
 var _len = array_length(entriesList);
-var _i = 0;
-repeat(_len) {
-  thread.Push({
-   callback: buffer_write,
-   args: [buffer, buffer_text, entriesList[_i++]]
-  });
-}
-
-thread.Push(function() {
+i = 0;
+thread.Loop(_len, function() {
+  buffer_write(buffer, buffer_text, entriesList[i]);
+  ++i;
+}).Finally(function() {
   buffer_save(buffer, "mytext.txt");
   show_debug_message("Buffer saved!");
   buffer_delete(buffer);
@@ -107,7 +107,7 @@ Sets the max time a given SimThread can execute (with `percent` being a value be
 
 Sets the max amount of executions per step. `infinity` is set by default. Any number above `0` will limit the SimThread to that number of function executions.
 
-## `.Loop(size, callback)
+## `.Loop(size, callback)`
 
 Begins looping a callback until X size is reached. This hooks onto the `.While()` method of `__SimResponseClass`.
 
@@ -167,11 +167,11 @@ Used to indicate whether it should rerun the callback or not, after the callback
 
 Return: `self`
 
-## `.Catch(exception)
+## `.Catch(callback)`
 
 Used to handle errors (if any).
 
-## `.Finally(callback)
+## `.Finally(callback)`
 
 Used to fire off an additional callback after the main callback has finished either successfully, has errored out or has called `.Break()`.
 

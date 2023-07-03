@@ -1,9 +1,9 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "SimSharedObject",
-  "isCompatibility": false,
+  "name": "SimCallback",
   "isDnD": false,
+  "isCompatibility": false,
   "parent": {
     "name": "SimThread",
     "path": "folders/SimThread.yy",
