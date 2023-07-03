@@ -14,7 +14,6 @@ function SimTick(_ticks = game_get_speed(gamespeed_fps)) constructor {
 		__ticksQueue[_i++] = [];
 	}
 	
-	
 	__currentTimer = time_source_create(time_source_global, 1, time_source_units_frames, function() { 
 		var _i = 0;
 		var _currentTickQueue = __ticksQueue[__currentTick];
@@ -27,6 +26,12 @@ function SimTick(_ticks = game_get_speed(gamespeed_fps)) constructor {
 	}, [], -1);
 	time_source_start(__currentTimer);
 	
+	#region jsDoc
+	/// @func    Pause()
+	/// @desc    Pauses the SimTick
+	/// @self    SimTick
+	/// @returns {Struct.SimTick}
+	#endregion
 	static Pause = function() {
 		if (SIMTHREAD_VERBOSE) __SimThreadTrace("Paused!");
 		if (time_source_exists(__currentTimer)) {
@@ -35,6 +40,12 @@ function SimTick(_ticks = game_get_speed(gamespeed_fps)) constructor {
 		return self;
 	}
 	
+	#region jsDoc
+	/// @func    Resume()
+	/// @desc    Unpauses the SimTick
+	/// @self    SimTick
+	/// @returns {Struct.SimTick}
+	#endregion
 	static Resume = function() {
 		if (SIMTHREAD_VERBOSE) __SimThreadTrace("Resumed!");
 		if (time_source_exists(__currentTimer)) {
@@ -43,6 +54,14 @@ function SimTick(_ticks = game_get_speed(gamespeed_fps)) constructor {
 		return self;
 	}
 	
+	#region jsDoc
+	/// @func    Insert()
+	/// @desc    Unpauses the SimTick
+	/// @self    SimTick
+	/// @param   {Real} pos
+	/// @param   {Function} callback
+	/// @returns {Struct.SimTick}
+	#endregion
 	static Insert = function(_pos = undefined, _entry) {
 		var _newEntry = __SimSanitize(_entry);
 		
@@ -55,6 +74,13 @@ function SimTick(_ticks = game_get_speed(gamespeed_fps)) constructor {
 		return self;		
 	}
 	
+	#region jsDoc
+	/// @func    Push()
+	/// @desc    Unpauses the SimTick
+	/// @self    SimTick
+	/// @param   {Function} callback
+	/// @returns {Struct.SimTick}
+	#endregion
 	static Push = function() {
 		var _i = 0;
 		repeat(argument_count) {
@@ -74,6 +100,13 @@ function SimTick(_ticks = game_get_speed(gamespeed_fps)) constructor {
 		return self;
 	}
 	
+	#region jsDoc
+	/// @func    Clear()
+	/// @desc    Clears the SimTick
+	/// @self    SimTick
+	/// @param   {Real} pos
+	/// @returns {Struct.SimTick}
+	#endregion
 	static Clear = function(_pos = undefined) {
 		if (is_undefined(_pos)) {
 			var _i = 0;
@@ -86,10 +119,21 @@ function SimTick(_ticks = game_get_speed(gamespeed_fps)) constructor {
 		return self;
 	}
 	
+	#region jsDoc
+	/// @func    GetMaxTicks()
+	/// @desc    Get's the maximum number of ticks.
+	/// @self    SimTick
+	/// @returns {Real}
+	#endregion
 	static GetMaxTicks = function() {
 		return __maxTicks;	
 	}
 	
+	#region jsDoc
+	/// @func    Destroy()
+	/// @desc    Destroys the SimTick
+	/// @self    SimTick
+	#endregion
 	static Destroy = function() {
 		time_source_destroy(__currentTimer);	
 		__ticksQueue = undefined;

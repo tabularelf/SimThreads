@@ -10,3 +10,18 @@ function __SimSanitize(_entry, _args = undefined) {
 	}
 	return _newEntry;
 }
+
+
+
+//-------------------------------------------------------------------------------------------------------\\
+//     __     You seem like you're looking for useful functions
+//    /  \  /   Would you like help with that?
+//    |  |
+//    @  @    You can try checking out the public scripts
+//    |  |    - SimCallback
+//    || |/   - SimCallback
+//    || ||   - SimTick
+//    |\_/|   
+//    \___/   
+//
+//-------------------------------------------------------------------------------------------------------//

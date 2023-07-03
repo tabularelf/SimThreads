@@ -43,4 +43,4 @@ function __SimHandleResponse(_response) {
 	}
 	
 	return false;
-}	
+}
