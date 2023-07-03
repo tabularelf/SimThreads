@@ -1,11 +1,11 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "SimSharedObject",
+  "name": "__SimHandleResponse",
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "SimThread",
-    "path": "folders/SimThread.yy",
+    "name": "System",
+    "path": "folders/SimThread/System.yy",
   },
 }

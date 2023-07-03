@@ -1,7 +1,7 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "SimSharedObject",
+  "name": "SimCallback",
   "isCompatibility": false,
   "isDnD": false,
   "parent": {

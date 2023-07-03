@@ -1,11 +1,11 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "SimSharedObject",
+  "name": "file_find_async",
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "SimThread",
-    "path": "folders/SimThread.yy",
+    "name": "SimThreads",
+    "path": "SimThreads.yyp",
   },
 }
