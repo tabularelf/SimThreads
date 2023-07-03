@@ -11,6 +11,7 @@
     {"name":"obj_test_file_find_async","order":4,"path":"objects/obj_test_file_find_async/obj_test_file_find_async.yy",},
     {"name":"file_find_async","order":5,"path":"scripts/file_find_async/file_find_async.yy",},
     {"name":"SimCallback","order":6,"path":"scripts/SimCallback/SimCallback.yy",},
+    {"name":"__SimHandleResponse","order":6,"path":"scripts/__SimHandleResponse/__SimHandleResponse.yy",},
     {"name":"SimTick","order":2,"path":"scripts/SimTick/SimTick.yy",},
     {"name":"rm_test","order":1,"path":"rooms/rm_test/rm_test.yy",},
   ],

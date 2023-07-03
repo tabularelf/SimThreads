@@ -35,6 +35,7 @@
     {"id":{"name":"obj_test_file_find_async","path":"objects/obj_test_file_find_async/obj_test_file_find_async.yy",},},
     {"id":{"name":"file_find_async","path":"scripts/file_find_async/file_find_async.yy",},},
     {"id":{"name":"SimCallback","path":"scripts/SimCallback/SimCallback.yy",},},
+    {"id":{"name":"__SimHandleResponse","path":"scripts/__SimHandleResponse/__SimHandleResponse.yy",},},
     {"id":{"name":"__SimThreadConfig","path":"scripts/__SimThreadConfig/__SimThreadConfig.yy",},},
     {"id":{"name":"__SimThreadTrace","path":"scripts/__SimThreadTrace/__SimThreadTrace.yy",},},
     {"id":{"name":"SimTick","path":"scripts/SimTick/SimTick.yy",},},
