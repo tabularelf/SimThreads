@@ -50,10 +50,14 @@ thread.Push(function() {
 To push a function/method to a SimThread with arguments, you provide:
 
 ```gml
-thread.push({
-  callback: myGMLFunction
+thread.Push({
+  callback: myGMLFunction,
   args: ["Hello World!"]
 });
+
+// Or 
+
+thread.Push(SimCallback(myGMLFunction, ["Hello World!"]));
 ```
 
 Giving you the ultimate flexibility in however you want to handle your games logic!
