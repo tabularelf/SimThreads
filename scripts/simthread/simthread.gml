@@ -1,7 +1,6 @@
 /// @func SimThread([maxExecution])
 /// @param [maxExecution]
-/// @feather ignore GM1042
-/// @feather ignore GM1043
+/// @feather ignore all
 function SimThread(_maxExecution = infinity) constructor {
 	static __id = -1;
 	self.__id = ++__id;
@@ -12,6 +11,7 @@ function SimThread(_maxExecution = infinity) constructor {
 	__inMainLoop = false;
 	__currentStruct = undefined;
 	__size = 0;
+	__pos = 0;
 	
 	__currentTimer = time_source_create(time_source_global, 1, time_source_units_frames, method(self, __update), [], -1);
 	time_source_start(__currentTimer);
@@ -28,7 +28,6 @@ function SimThread(_maxExecution = infinity) constructor {
 	}
 	
 	static __update = function() { 
-		static _pos = 0;
 		var _prevTime = get_timer();
 		var _totalTime = (_prevTime + (game_get_speed(gamespeed_microseconds) *  __maxTimePercentage));
 		__pushNextPointer = 1;
@@ -36,18 +35,18 @@ function SimThread(_maxExecution = infinity) constructor {
 		if (__maxExecution == infinity) {
 			while(__size > 0) {
 				if (__size == 0) break;
-				_pos = _pos % __size;
+				__pos = __pos % __size;
 				__pushNextPointer = 1;
-				var _exec = __threadQueue[| _pos];
+				var _exec = __threadQueue[| __pos];
 				__currentStruct = _exec;
 				var _result = __SimHandleResponse(_exec);
 				__currentStruct = undefined;
 				if (_result) {
-					ds_list_delete(__threadQueue, _pos);	
-					--_pos;
+					ds_list_delete(__threadQueue, __pos);	
+					--__pos;
 					--__size;
 				}
-				++_pos;
+				++__pos;
 				
 				if (get_timer() > _totalTime) {
 					if (SIMTHREAD_VERBOSE) __SimThreadTrace("Total time reached! Time taken: " + string((get_timer() - _prevTime) / 1000) + " Remaining queued: " + string(GetQueueLength()));
@@ -57,18 +56,18 @@ function SimThread(_maxExecution = infinity) constructor {
 		} else if (__maxExecution > 0) {
 			repeat(__maxExecution) {
 				if (__size == 0) break;
-				_pos = _pos % __size;
+				__pos = __pos % __size;
 				__pushNextPointer = 1;
-				var _exec = __threadQueue[| _pos];
+				var _exec = __threadQueue[| __pos];
 				__currentStruct = _exec;
 				var _result = __SimHandleResponse(_exec);
 				__currentStruct = undefined;
 				if (_result) {
-					ds_list_delete(__threadQueue, _pos);	
-					--_pos;
+					ds_list_delete(__threadQueue, __pos);	
+					--__pos;
 					--__size;
 				}
-				++_pos;
+				++__pos;
 				
 				if (get_timer() > _totalTime) {
 					if (SIMTHREAD_VERBOSE) __SimThreadTrace("Total time reached! Time taken: " + string((get_timer() - _prevTime) / 1000) + " Remaining queued: " + string(GetQueueLength()));
