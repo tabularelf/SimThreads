@@ -3,6 +3,7 @@
   "resourceVersion": "1.6",
   "name": "SimThreads",
   "resources": [
+    {"id":{"name":"__SimCallbackClass","path":"scripts/__SimCallbackClass/__SimCallbackClass.yy",},"order":7,},
     {"id":{"name":"__SimResponseClass","path":"scripts/__SimResponseClass/__SimResponseClass.yy",},"order":5,},
     {"id":{"name":"__SimThreadFuncExec","path":"scripts/__SimThreadFuncExec/__SimThreadFuncExec.yy",},"order":3,},
     {"id":{"name":"obj_test_save","path":"objects/obj_test_save/obj_test_save.yy",},"order":3,},

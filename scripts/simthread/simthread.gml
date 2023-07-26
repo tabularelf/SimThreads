@@ -16,6 +16,7 @@ function SimThread(_maxExecution = infinity) constructor {
 	__currentTimer = time_source_create(time_source_global, 1, time_source_units_frames, method(self, __Update), [], -1);
 	time_source_start(__currentTimer);
 	
+	#region Public Methods
 	/// @desc    Forces the Simthread to stop whatever code is being executed during the response (in the case of a loop).
 	///          Note: This only interrupts the loop, but not the current callback that's still processing. You will need to call return; or exit; to exit out of the callback.
 	/// @self    SimThread
@@ -171,7 +172,9 @@ function SimThread(_maxExecution = infinity) constructor {
 		++__size;
 		return _response;
 	}
+	#endregion
 	
+	#region Private Methods
 	static __Execute = function() {
 		__pos = __pos % __size;
 		__pushNextPointer = 1;
@@ -227,4 +230,5 @@ function SimThread(_maxExecution = infinity) constructor {
 			time_source_stop(__currentTimer);	
 		}
 	}
+	#endregion
 }

@@ -26,6 +26,7 @@ function SimTick(_ticks = game_get_speed(gamespeed_fps)) constructor {
 	}, [], -1);
 	time_source_start(__currentTimer);
 	
+	#region Public Methods
 	/// @desc    Pauses the SimTick
 	/// @self    SimTick
 	/// @returns {Struct.SimTick}
@@ -117,4 +118,5 @@ function SimTick(_ticks = game_get_speed(gamespeed_fps)) constructor {
 		time_source_destroy(__currentTimer);	
 		__ticksQueue = undefined;
 	}
+	#endregion
 }

@@ -8,6 +8,8 @@ function __SimSanitize(_entry, _args = undefined) {
 	} else {
 		if (!variable_instance_exists(_newEntry, "args")) {
 			_newEntry.args = _mainArgs;
+		} else if (_newEntry.args == undefined) {
+			_newEntry.args = _mainArgs;	
 		}
 	}
 	return _newEntry;
