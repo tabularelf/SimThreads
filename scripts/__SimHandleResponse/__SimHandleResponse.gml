@@ -25,8 +25,12 @@ function __SimHandleResponse(_response) {
 				}
 			}
 		} catch(_ex) {
-			if (_response.catchCallback != undefined) {
-				_response.catchCallback(_ex);
+			if (array_length(_response.catchCallback) > 0) {
+				var _i = 0;
+				repeat(array_length(_response.catchCallback)) {
+					_response.catchCallback[_i](_ex);	
+					++_i;
+				}
 			} else {
 				// No catch statement, throw it!
 				throw _ex;	
@@ -36,8 +40,12 @@ function __SimHandleResponse(_response) {
 	}
 	
 	if (_response.__forceBreak || _response.__finished) {
-		if (_response.finallyCallback != undefined) {
-			_response.finallyCallback();	
+		if (array_length(_response.finallyCallback) > 0) {
+			var _i = 0;
+			repeat(array_length(_response.finallyCallback)) {
+				_response.finallyCallback[_i]();	
+				++_i;
+			}
 		}
 		return true;
 	}
