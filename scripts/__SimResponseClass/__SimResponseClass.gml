@@ -5,6 +5,8 @@ function __SimResponseClass(_thread) constructor {
 	__inLoop = false;
 	__size = -1;
 	__pos = 0;
+	__delayNum = 0;
+	__cancelled = false;
 	
 	// Callbacks
 	callback = undefined;
@@ -48,5 +50,19 @@ function __SimResponseClass(_thread) constructor {
 	static Finally = function(_callback) {
 		array_push(finallyCallback, _callback);
 		return self;
+	}
+	
+	static Delay = function(_num) {
+		__delayNum = _num;	
+		return self;
+	}
+	
+	static DelayAdd = function(_num) {
+		__delayNum += _num;	
+		return self;
+	}
+	
+	static Cancel = function() {
+		__cancelled = true;
 	}
 }

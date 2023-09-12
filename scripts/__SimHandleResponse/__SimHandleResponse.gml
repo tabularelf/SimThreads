@@ -1,9 +1,17 @@
 function __SimHandleResponse(_response) {
-	if (!_response.__forceBreak) {
+	if (_response.__cancelled) {
+		return true;	
+	}
 	
+	if (!_response.__forceBreak) {
+		if (_response.__delayNum > 0) {
+			_response.__delayNum--;
+			return false;
+		}
 		try {
 			if (_response.whileCallback != undefined) {
-				if (!_response.whileCallback(_response.__pos)) {
+				var _whileResult = _response.__inLoop ? _response.whileCallback(_response.__pos) : _response.whileCallback();
+				if (!_whileResult) {
 					_response.__finished = true;	
 				}
 			}
