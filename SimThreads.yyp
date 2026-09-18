@@ -10,12 +10,13 @@
   },
   "defaultScriptType":1,
   "Folders":[
-    {"$GMFolder":"","%Name":"SimThread","folderPath":"folders/SimThread.yy","name":"SimThread","resourceType":"GMFolder","resourceVersion":"2.0",},
-    {"$GMFolder":"","%Name":"System","folderPath":"folders/SimThread/System.yy","name":"System","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"SimThreads","folderPath":"folders/SimThreads.yy","name":"SimThreads","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"System","folderPath":"folders/SimThreads/System.yy","name":"System","resourceType":"GMFolder","resourceVersion":"2.0",},
   ],
   "ForcedPrefabProjectReferences":[],
   "IncludedFiles":[
     {"$GMIncludedFile":"","%Name":"data.csv","CopyToMask":-1,"filePath":"datafiles","name":"data.csv","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"simthreads_license.txt","CopyToMask":-1,"filePath":"datafiles","name":"simthreads_license.txt","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"test.json","CopyToMask":-1,"filePath":"datafiles","name":"test.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"test2.json","CopyToMask":-1,"filePath":"datafiles","name":"test2.json","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
   ],

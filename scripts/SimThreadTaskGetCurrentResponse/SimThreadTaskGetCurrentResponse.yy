@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"SimThreadTaskGetCurrentResponse",
   "parent":{
-    "name":"SimThread",
-    "path":"folders/SimThread.yy",
+    "name":"SimThreads",
+    "path":"folders/SimThreads.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

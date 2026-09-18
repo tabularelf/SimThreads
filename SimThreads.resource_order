@@ -1,7 +1,7 @@
 {
   "FolderOrderSettings":[
-    {"name":"SimThread","order":6,"path":"folders/SimThread.yy",},
-    {"name":"System","order":1,"path":"folders/SimThread/System.yy",},
+    {"name":"SimThreads","order":6,"path":"folders/SimThreads.yy",},
+    {"name":"System","order":1,"path":"folders/SimThreads/System.yy",},
   ],
   "ResourceOrderSettings":[
     {"name":"obj_test_file_find_async","order":2,"path":"objects/obj_test_file_find_async/obj_test_file_find_async.yy",},

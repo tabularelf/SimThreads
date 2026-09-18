@@ -6,7 +6,7 @@
   "name":"__SimHandleResponse",
   "parent":{
     "name":"System",
-    "path":"folders/SimThread/System.yy",
+    "path":"folders/SimThreads/System.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
