@@ -19,7 +19,11 @@ function SimTick(_ticks = game_get_speed(gamespeed_fps)) constructor {
 		var _currentTickQueue = __ticksQueue[__currentTick];
 		repeat(array_length(_currentTickQueue)) {
 			var _exec = _currentTickQueue[_i];
-			__SimThreadFuncExec(_exec.callback, _exec.args);
+			if (is_array(_exec.args)) {
+				method_call(_exec.ptr, _exec.args);
+			} else {
+				_exec.ptr();
+			}
 			++_i;
 		}
 		__currentTick = (__currentTick + 1) % __maxTicks;
@@ -55,7 +59,7 @@ function SimTick(_ticks = game_get_speed(gamespeed_fps)) constructor {
 	/// @param   {Function} callback
 	/// @returns {Struct.SimTick}
 	static Insert = function(_pos = undefined, _entry) {
-		var _newEntry = __SimSanitize(_entry);
+		var _newEntry = __SimSanitize(_entry, undefined, other);
 		
 		if (is_undefined(_pos)) {
 			array_push(__ticksQueue[__lastPlacedTick], _newEntry);	

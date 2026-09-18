@@ -6,6 +6,7 @@
   "ResourceOrderSettings":[
     {"name":"obj_test_file_find_async","order":2,"path":"objects/obj_test_file_find_async/obj_test_file_find_async.yy",},
     {"name":"obj_test_save","order":1,"path":"objects/obj_test_save/obj_test_save.yy",},
+    {"name":"obj_test_tick","order":7,"path":"objects/obj_test_tick/obj_test_tick.yy",},
     {"name":"obj_test","order":4,"path":"objects/obj_test/obj_test.yy",},
     {"name":"__SimHandleResponse","order":1,"path":"scripts/__SimHandleResponse/__SimHandleResponse.yy",},
     {"name":"__SimSanitize","order":3,"path":"scripts/__SimSanitize/__SimSanitize.yy",},

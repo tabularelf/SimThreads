@@ -29,6 +29,7 @@
   "resources":[
     {"id":{"name":"obj_test_file_find_async","path":"objects/obj_test_file_find_async/obj_test_file_find_async.yy",},},
     {"id":{"name":"obj_test_save","path":"objects/obj_test_save/obj_test_save.yy",},},
+    {"id":{"name":"obj_test_tick","path":"objects/obj_test_tick/obj_test_tick.yy",},},
     {"id":{"name":"obj_test","path":"objects/obj_test/obj_test.yy",},},
     {"id":{"name":"rm_test","path":"rooms/rm_test/rm_test.yy",},},
     {"id":{"name":"__SimCallbackClass","path":"scripts/__SimCallbackClass/__SimCallbackClass.yy",},},
