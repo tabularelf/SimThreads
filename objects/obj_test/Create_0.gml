@@ -9,6 +9,7 @@ thread.Loop(10, function() {
 }).OnFinish(function() {
 	show_debug_message("Woot!");	
 	thread.Push(function() {
+		SIMTHREAD_CURRENT_TASK.Cancel();
 		j += bar;	
 	}).OnCatch(function(_ex) {
 		show_debug_message(_ex.message);

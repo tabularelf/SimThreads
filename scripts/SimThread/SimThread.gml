@@ -92,11 +92,11 @@ function SimThread(_maxExecution = infinity) constructor {
 	/// @self    SimThread
 	/// @param   {Real} pos
 	/// @param   {Function} callback
-	/// @returns {Struct.__SimResponseClass}
+	/// @returns {Struct.__SimTaskClass}
 	static Insert = function(_pos, _callback, _args = undefined) {
 		var _tsState = time_source_get_state(__currentTimer);
 		if (_tsState == time_source_state_stopped || _tsState == time_source_state_initial) && (__autoStep) time_source_start(__currentTimer);
-		var _response = new __SimResponseClass(self, __frame);
+		var _response = new __SimTaskClass(self, __frame);
 		_response.callback = __SimSanitize(_callback, _args, other);
 		//var _newEntry = __SimSanitize(_entry);
 		array_insert(__threadQueue, clamp(_pos, 0, __size), _response);	
@@ -107,11 +107,11 @@ function SimThread(_maxExecution = infinity) constructor {
 	/// @desc    Pushes one or multiple functions/methods or structs, adding at the end of the queue.
 	/// @self    SimThread
 	/// @param   {Function} callback
-	/// @returns {Struct.__SimResponseClass}
+	/// @returns {Struct.__SimTaskClass}
 	static Push = function(_callback, _args = undefined) {
 		var _tsState = time_source_get_state(__currentTimer);
 		if (_tsState == time_source_state_stopped || _tsState == time_source_state_initial) && (__autoStep) time_source_start(__currentTimer);
-		var _response = new __SimResponseClass(self, __frame);
+		var _response = new __SimTaskClass(self, __frame);
 		_response.callback = __SimSanitize(_callback, _args, other);
 		array_push(__threadQueue, _response);
 		++__size;
@@ -121,7 +121,7 @@ function SimThread(_maxExecution = infinity) constructor {
 	/// @desc    Pushes the next callback immediately behind this one.
 	/// @self    SimThread
 	/// @param   {Function} callback
-	/// @returns {Struct.__SimResponseClass}
+	/// @returns {Struct.__SimTaskClass}
 	static PushNext = function(_callback) {
 		if (!__inMainLoop) show_error(".PushNext cannot be used outside of the main SimThread loop!", true);
 		return Insert(__pushNextPointer++, _callback);
@@ -179,15 +179,15 @@ function SimThread(_maxExecution = infinity) constructor {
 		return self;
 	}
 	
-	/// @desc    Begins looping a callback until X size is reached. This hooks onto the .While() method of __SimResponseClass.
+	/// @desc    Begins looping a callback until X size is reached. This hooks onto the .While() method of __SimTaskClass.
 	/// @self    SimThread
 	/// @param   {Real} size
 	/// @param   {Function} callback
-	/// @returns {Struct.__SimResponseClass}
+	/// @returns {Struct.__SimTaskClass}
 	static Loop = function(_size, _callback, _args = undefined) {
 		var _tsState = time_source_get_state(__currentTimer);
 		if (_tsState == time_source_state_stopped || _tsState == time_source_state_initial) && (__autoStep) time_source_start(__currentTimer);
-		var _response = new __SimResponseClass(self, __frame);
+		var _response = new __SimTaskClass(self, __frame);
 		_response.callback = __SimSanitize(_callback, _args, other);
 		_response.whileCallback = method(_response, function(_pos) {
 			return _pos	<= __size;
@@ -200,15 +200,15 @@ function SimThread(_maxExecution = infinity) constructor {
 		return _response;
 	}
 
-	/// @desc    Begins looping a callback until X size is reached. This hooks onto the .While() method of __SimResponseClass.
+	/// @desc    Begins looping a callback until X size is reached. This hooks onto the .While() method of __SimTaskClass.
 	/// @self    SimThread
 	/// @param   {Real} size
 	/// @param   {Function} callback
-	/// @returns {Struct.__SimResponseClass}
+	/// @returns {Struct.__SimTaskClass}
 	static InvertedLoop = function(_size, _callback, _args = undefined) {
 		var _tsState = time_source_get_state(__currentTimer);
 		if (_tsState == time_source_state_stopped || _tsState == time_source_state_initial) && (__autoStep) time_source_start(__currentTimer);
-		var _response = new __SimResponseClass(self, __frame);
+		var _response = new __SimTaskClass(self, __frame);
 		_response.callback = __SimSanitize(_callback, _args, other);
 		_response.whileCallback = method(_response, function(_pos) {
 			return _pos >= 0;
@@ -225,7 +225,7 @@ function SimThread(_maxExecution = infinity) constructor {
 		return __deltaTime;	
 	}
 
-	/// @self    __SimResponseClass
+	/// @self    __SimTaskClass
 	/// @param {Function} callback
 	static SetIterationCallback = function(_callback) {
 		__iterationCallback = _callback;

@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"SimThreadTaskGetCurrentResponse",
+  "%Name":"SimThreadGetCurrentTask",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"SimThreadTaskGetCurrentResponse",
+  "name":"SimThreadGetCurrentTask",
   "parent":{
     "name":"SimThreads",
     "path":"folders/SimThreads.yy",

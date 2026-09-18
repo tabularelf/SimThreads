@@ -1,5 +1,5 @@
 /// @param {Struct.SimThread}
-function __SimResponseClass(_thread, _frame) constructor {
+function __SimTaskClass(_thread, _frame) constructor {
 	__thread = _thread;
 	__forceBreak = false;
 	__finished = false;
@@ -29,9 +29,9 @@ function __SimResponseClass(_thread, _frame) constructor {
 	finallyCallback = [];
 	
 	/// @desc    Used to indicate whether it should rerun the callback or not, before the callback is executed.
-	/// @self    __SimResponseClass
+	/// @self    __SimTaskClass
 	/// @param   {Function} callback
-	/// @returns {Struct.__SimResponseClass}
+	/// @returns {Struct.__SimTaskClass}
 	static While = function(_callback) {
 		whileCallback = _callback;
 		untilCallback = undefined;
@@ -44,36 +44,36 @@ function __SimResponseClass(_thread, _frame) constructor {
 	};
 	
 	/// @desc    Used to indicate whether it should rerun the callback or not, after the callback is executed.
-	/// @self    __SimResponseClass
+	/// @self    __SimTaskClass
 	/// @param   {Function} callback
-	/// @returns {Struct.__SimResponseClass}
+	/// @returns {Struct.__SimTaskClass}
 	static Until = function(_callback) {
 		untilCallback = _callback;
 		whileCallback = undefined;
 		return self;
 	}
 
-	/// @self    __SimResponseClass
+	/// @self    __SimTaskClass
 	/// @param   {Function} callback
-	/// @returns {Struct.__SimResponseClass}
+	/// @returns {Struct.__SimTaskClass}
 	static OnFinish = function(_callback) {
 		array_push(finishCallback, _callback);
 		return self;
 	};
 	
 	/// @desc    Used to handle errors (if any).
-	/// @self    __SimResponseClass
+	/// @self    __SimTaskClass
 	/// @param   {Function} callback
-	/// @returns {Struct.__SimResponseClass}
+	/// @returns {Struct.__SimTaskClass}
 	static OnCatch = function(_callback) {
 		array_push(catchCallback, _callback);
 		return self;
 	}
 	
 	/// @desc    Used to handle errors (if any).
-	/// @self    __SimResponseClass
+	/// @self    __SimTaskClass
 	/// @param   {Function} callback
-	/// @returns {Struct.__SimResponseClass}
+	/// @returns {Struct.__SimTaskClass}
 	static OnFinally = function(_callback) {
 		array_push(finallyCallback, _callback);
 		return self;

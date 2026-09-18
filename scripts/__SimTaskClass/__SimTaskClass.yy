@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"__SimResponseClass",
+  "%Name":"__SimTaskClass",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"__SimResponseClass",
+  "name":"__SimTaskClass",
   "parent":{
     "name":"System",
     "path":"folders/SimThreads/System.yy",
