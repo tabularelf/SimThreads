@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"__SimCallbackClass",
+  "%Name":"__SimThreadConfig",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"__SimCallbackClass",
+  "name":"__SimThreadConfig",
   "parent":{
-    "name":"System",
-    "path":"folders/SimThread/System.yy",
+    "name":"SimThread",
+    "path":"folders/SimThread.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

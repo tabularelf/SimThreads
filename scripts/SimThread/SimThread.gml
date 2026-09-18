@@ -3,20 +3,40 @@
 /// @feather ignore all
 function SimThread(_maxExecution = infinity) constructor {
 	static __id = -1;
+	__frame = 0;
 	self.__id = ++__id;
 	__maxTimePercentage = 1;
 	__maxExecution = _maxExecution;
-	__threadQueue = ds_list_create();
+	__threadQueue = [];
 	__pushNextPointer = 1;
 	__inMainLoop = false;
 	__currentStruct = undefined;
 	__size = 0;
 	__pos = 0;
+	__autoStep = true;
+	__lastTime = current_time;
+	__deltaTime = 0;
+	__iterationCallback = undefined;
 	
 	__currentTimer = time_source_create(time_source_global, 1, time_source_units_frames, method(self, __Update), [], -1);
-	time_source_start(__currentTimer);
+	//time_source_start(__currentTimer);
 	
 	#region Public Methods
+	static AutoStep = function(_bool) {
+		if (_bool) {
+			time_source_start(__currentTimer);
+			__autoStep = true;
+		} else {
+			time_source_stop(__currentTimer);
+			__autoStep = false;
+		}
+		return self;
+	}
+	
+	static Step = function() {
+		__Update();	
+	}
+	
 	/// @desc    Forces the Simthread to stop whatever code is being executed during the response (in the case of a loop).
 	///          Note: This only interrupts the loop, but not the current callback that's still processing. You will need to call return; or exit; to exit out of the callback.
 	/// @self    SimThread
@@ -73,12 +93,13 @@ function SimThread(_maxExecution = infinity) constructor {
 	/// @param   {Real} pos
 	/// @param   {Function} callback
 	/// @returns {Struct.__SimResponseClass}
-	static Insert = function(_pos, _callback) {
-		if (time_source_get_state(time_source_state_stopped)) time_source_start(__currentTimer);
-		var _response = new __SimResponseClass(self);
-		_response.callback = __SimSanitize(_callback);
+	static Insert = function(_pos, _callback, _args = undefined) {
+		var _tsState = time_source_get_state(__currentTimer);
+		if (_tsState == time_source_state_stopped || _tsState == time_source_state_initial) && (__autoStep) time_source_start(__currentTimer);
+		var _response = new __SimResponseClass(self, __frame);
+		_response.callback = __SimSanitize(_callback, _args, other);
 		//var _newEntry = __SimSanitize(_entry);
-		ds_list_insert(__threadQueue, clamp(_pos, 0, __size), _response);	
+		array_insert(__threadQueue, clamp(_pos, 0, __size), _response);	
 		++__size;
 		return _response;		
 	}
@@ -87,11 +108,12 @@ function SimThread(_maxExecution = infinity) constructor {
 	/// @self    SimThread
 	/// @param   {Function} callback
 	/// @returns {Struct.__SimResponseClass}
-	static Push = function(_callback) {
-		if (time_source_get_state(time_source_state_stopped)) time_source_start(__currentTimer);
-		var _response = new __SimResponseClass(self);
-		_response.callback = __SimSanitize(_callback);
-		ds_list_add(__threadQueue, _response);
+	static Push = function(_callback, _args = undefined) {
+		var _tsState = time_source_get_state(__currentTimer);
+		if (_tsState == time_source_state_stopped || _tsState == time_source_state_initial) && (__autoStep) time_source_start(__currentTimer);
+		var _response = new __SimResponseClass(self, __frame);
+		_response.callback = __SimSanitize(_callback, _args, other);
+		array_push(__threadQueue, _response);
 		++__size;
 		return _response;
 	}
@@ -109,7 +131,7 @@ function SimThread(_maxExecution = infinity) constructor {
 	/// @self    SimThread
 	/// @returns {Struct.SimThread}
 	static Clear = function() {
-		ds_list_clear(__threadQueue);
+		array_resize(__threadQueue, 0);
 		return self;
 	}
 	
@@ -118,39 +140,43 @@ function SimThread(_maxExecution = infinity) constructor {
 	/// @returns {undefined}
 	static Destroy = function() {
 		time_source_destroy(__currentTimer);	
-		ds_list_destroy(__threadQueue);
-		__threadQueue = undefined;
+		delete __threadQueue;
+		__size = 0;
+		__pos = 0;
 	}
 	
 	/// @desc    Gets the length of the SimThread queue.
 	/// @self    SimThread
 	/// @returns {Real}
 	static GetQueueLength = function() {
-		return ds_list_size(__threadQueue);	
+		return array_length(__threadQueue);	
 	}
 	
 	/// @desc    Flushes all functions (aka executes all functions/methods) within the queue, regardless of the settings of .SetMaxTime() and .SetMaxExecutions(), and regardless if it's paused or not.
 	/// @self    SimThread
 	static Flush = function() {
-		static _pos = 0;
+		var _pos = 0;
 		__pushNextPointer = 1;
 		__inMainLoop = true;
 		while(__size > 0) {
 				_pos = _pos % __size;
-				__pushNextPointer = 1;
-				var _exec = __threadQueue[| 0];
+				__pushNextPointer = _pos+1;
+				var _exec = __threadQueue[_pos];
 				__currentStruct = _exec;
 				var _result = __SimHandleResponse(_exec);
 				__currentStruct = undefined;
 				if (_result) {
-					ds_list_delete(__threadQueue, 0);	
+					array_delete(__threadQueue, _pos, 1);	
 					--__size;
 					--_pos;
 				}
+				_pos++;
 		}
 		// Reset
+		array_resize(__threadQueue, 0);
 		__pushNextPointer = 1;
 		__inMainLoop = false;
+		return self;
 	}
 	
 	/// @desc    Begins looping a callback until X size is reached. This hooks onto the .While() method of __SimResponseClass.
@@ -158,46 +184,82 @@ function SimThread(_maxExecution = infinity) constructor {
 	/// @param   {Real} size
 	/// @param   {Function} callback
 	/// @returns {Struct.__SimResponseClass}
-	static Loop = function(_size, _callback) {
-		if (time_source_get_state(time_source_state_stopped)) time_source_start(__currentTimer);
-		var _response = new __SimResponseClass(self);
-		_response.callback = __SimSanitize(_callback);
+	static Loop = function(_size, _callback, _args = undefined) {
+		var _tsState = time_source_get_state(__currentTimer);
+		if (_tsState == time_source_state_stopped || _tsState == time_source_state_initial) && (__autoStep) time_source_start(__currentTimer);
+		var _response = new __SimResponseClass(self, __frame);
+		_response.callback = __SimSanitize(_callback, _args, other);
 		_response.whileCallback = method(_response, function(_pos) {
 			return _pos	<= __size;
 		});
 		_response.__size = int64(_size-1);
 		_response.__pos = int64(0);
 		_response.__inLoop = true;
-		ds_list_add(__threadQueue, _response);
+		array_push(__threadQueue, _response);
 		++__size;
 		return _response;
 	}
+
+	/// @desc    Begins looping a callback until X size is reached. This hooks onto the .While() method of __SimResponseClass.
+	/// @self    SimThread
+	/// @param   {Real} size
+	/// @param   {Function} callback
+	/// @returns {Struct.__SimResponseClass}
+	static InvertedLoop = function(_size, _callback, _args = undefined) {
+		var _tsState = time_source_get_state(__currentTimer);
+		if (_tsState == time_source_state_stopped || _tsState == time_source_state_initial) && (__autoStep) time_source_start(__currentTimer);
+		var _response = new __SimResponseClass(self, __frame);
+		_response.callback = __SimSanitize(_callback, _args, other);
+		_response.whileCallback = method(_response, function(_pos) {
+			return _pos >= 0;
+		});
+		_response.__pos = int64(_size-1);
+		_response.__inLoop = true;
+		_response.__incrementor = -1;
+		array_push(__threadQueue, _response);
+		++__size;
+		return _response;
+	}
+	
+	static GetDeltaTime = function() {
+		return __deltaTime;	
+	}
+
+	/// @self    __SimResponseClass
+	/// @param {Function} callback
+	static SetIterationCallback = function(_callback) {
+		__iterationCallback = _callback;
+		return self;
+	};
 	#endregion
 	
 	#region Private Methods
 	static __Execute = function() {
 		__pos = __pos % __size;
-		__pushNextPointer = 1;
-		var _exec = __threadQueue[| __pos];
+		__pushNextPointer = __pos+1;
+		var _exec = __threadQueue[__pos];
 		__currentStruct = _exec;
 		var _result = __SimHandleResponse(_exec);
 		__currentStruct = undefined;
 		
-		if (_result) {
-			ds_list_delete(__threadQueue, __pos);	
+		if (_result) && (!_exec.__keepAlive) {
+			if (is_array(__threadQueue)) array_delete(__threadQueue, __pos, 1);	
 			--__pos;
 			--__size;
 		}
 		++__pos;	
-	}
+	};
 	
 	static __Update = function() { 
+		// Update frame counter
+		++__frame;
 		var _prevTime = get_timer();
 		var _totalTime = (_prevTime + (game_get_speed(gamespeed_microseconds) *  __maxTimePercentage));
 		__pushNextPointer = 1;
 		__inMainLoop = true;
 		if (__maxExecution == infinity) {
 			while(__size > 0) {
+				__deltaTime = current_time - __lastTime;
 				if (__size == 0) break;
 				__Execute();
 				
@@ -208,6 +270,7 @@ function SimThread(_maxExecution = infinity) constructor {
 			}	
 		} else if (__maxExecution > 0) {
 			repeat(__maxExecution) {
+				__deltaTime = current_time - __lastTime;
 				if (__size == 0) break;
 				__Execute();
 				
@@ -216,7 +279,7 @@ function SimThread(_maxExecution = infinity) constructor {
 					break;
 				}
 			}
-			
+			__lastTime = current_time;
 			if (GetQueueLength() > 0) {
 				if (SIMTHREAD_VERBOSE) __SimThreadTrace("Max executions reached! Saving for next frame...");	
 			}
@@ -224,9 +287,10 @@ function SimThread(_maxExecution = infinity) constructor {
 		// We reset this incase of sequential .PushNext calls
 		__pushNextPointer = 1;
 		__inMainLoop = false;
+		if (is_callable(__iterationCallback)) __iterationCallback();
 		
 		// Turn off SimThread process when not in use
-		if (ds_list_size(__threadQueue) < 1) {
+		if (is_array(__threadQueue)) && (array_length(__threadQueue) < 1) {
 			time_source_stop(__currentTimer);	
 		}
 	}

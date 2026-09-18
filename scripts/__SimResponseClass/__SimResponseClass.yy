@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "__SimResponseClass",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "System",
-    "path": "folders/SimThread/System.yy",
+  "$GMScript":"v1",
+  "%Name":"__SimResponseClass",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"__SimResponseClass",
+  "parent":{
+    "name":"System",
+    "path":"folders/SimThread/System.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -1,23 +1,23 @@
 thread = new SimThread();
-thread.SetMaxExecution(1);
-i = 0;
-draw_enable_drawevent(false);
+//thread.SetMaxExecution(1);
+draw_enable_drawevent(true);
+
+//thread.Push(function(){show_message("HI")});
 
 thread.Loop(10, function() {
-	show_debug_message(i);
-	++i;
-}).Delay(60).Finally(function() {
+	show_debug_message(SIMTHREAD_POS);
+}).OnFinish(function() {
 	show_debug_message("Woot!");	
 	thread.Push(function() {
 		j += bar;	
-	}).Delay(60*10).Catch(function(_ex) {
+	}).OnCatch(function(_ex) {
 		show_debug_message(_ex.message);
-	}).Finally(function() {
+	}).OnFinally(function() {
 		show_debug_message("Woot x2!");
-		game_end();
-	}).Finally(function() {
-		show_debug_message("Can this execute?");	
-	}).Finally(function() {
-		show_debug_message("Yes yes it can!");	
-	});
+		SIMTHREAD_CURRENT_THREAD.Push(function(){}).OnFinish(function() {
+			show_debug_message("Can this execute?");	
+		}).OnFinish(function() {
+			show_debug_message("Yes yes it can!");	
+		});
+	})
 });

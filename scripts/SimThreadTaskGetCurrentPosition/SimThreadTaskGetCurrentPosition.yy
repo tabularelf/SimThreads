@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"SimThreadTaskGetCurrentPosition",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"SimThreadTaskGetCurrentPosition",
+  "parent":{
+    "name":"SimThread",
+    "path":"folders/SimThread.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

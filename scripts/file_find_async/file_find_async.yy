@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "file_find_async",
-  "isDnD": false,
-  "isCompatibility": false,
-  "parent": {
-    "name": "SimThreads",
-    "path": "SimThreads.yyp",
+  "$GMScript":"v1",
+  "%Name":"file_find_async",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"file_find_async",
+  "parent":{
+    "name":"SimThreads",
+    "path":"SimThreads.yyp",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

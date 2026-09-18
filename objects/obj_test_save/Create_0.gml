@@ -1,5 +1,3 @@
-/// @description Insert description here
-// You can write your code in this editor
 show_debug_overlay(true);
 /*tick = new SimTick(20);
 tick.Push(function() {

@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"__SimCallbackClass",
+  "%Name":"__SimSanitize",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"__SimCallbackClass",
+  "name":"__SimSanitize",
   "parent":{
     "name":"System",
     "path":"folders/SimThread/System.yy",
